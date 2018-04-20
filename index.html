@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Psychic-Game</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <div>
+    <h1>Psychic Game</h1>
+    <br>
+    <h2>Guess what letter I'm thinking of</h2>
+    <br>
+
+    <!–– "final display" -->
+
+    <p id="wins">Wins: </p>
+    <p id="losses">Losses: </p>
+    <p id="guessesLeft">Guesses Left: </p>
+    <p id="guessesSoFar">Your Guesses So Far:</p>
+
+  </div>
+
+  <script type="text/javascript">
+    
+    
+    //starting variables
+    var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    var wins = document.getElementById("wins");
+    var losses = document.getElementById("losses");
+    var winTotal = 0;
+    var lossTotal = 0;
+
+    var guessesLeft = document.getElementById("guessesLeft");
+    var guessesSoFar = document.getElementById("guessesSoFar");
+
+
+    var defaultGuessesLeft = 9;
+    var guessesLeftTotal = defaultGuessesLeft;
+    var guessesArray = [];
+    var getRandomLetter = function () {
+      randomLetter = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+      console.log(randomLetter);
+      return randomLetter
+    }
+    var displayStats = function () {
+      wins.innerHTML = "Wins: " + winTotal
+      losses.innerHTML = "Losses: " + lossTotal
+      guessesLeft.innerHTML = "Guesses Left: " + guessesLeftTotal
+      guessesSoFar.innerHTML = "Your Guesses So Far: " + guessesArray
+    }
+    var resetGame = function () {
+      guessesArray = [];
+      guessesLeftTotal = defaultGuessesLeft;
+      currentLetter = getRandomLetter();
+    }
+    var playerWin = function (playerChoice) {
+      return playerChoice === currentLetter
+    }
+    var playerLose = function () {
+      return guessesLeftTotal === 0;
+    }
+    var currentLetter = getRandomLetter();
+    displayStats();
+    document.onkeyup = function (event) {
+      var playerChoice = event.key;
+      guessesLeftTotal--
+      guessesArray.push(playerChoice)
+      if (playerWin(playerChoice)) {
+        winTotal++;
+        resetGame();
+      }
+      if (playerLose()) {
+        lossTotal++;
+        resetGame();
+      }
+      displayStats();
+    }
+
+
+  </script>
+
+</body>
+
+</html>
